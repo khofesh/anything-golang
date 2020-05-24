@@ -13,14 +13,17 @@ func main() {
 		return
 	}
 	// Get value from cell by given worksheet name and axis.
-	cell, err := f.GetCellValue("1210000", "B2")
+	fmt.Println(f.GetSheetList())
+	sheetLists := f.GetSheetList() // list of sheets
+
+	cell, err := f.GetCellValue(sheetLists[2], "B2")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	fmt.Println(cell)
 	// Get all the rows in the Sheet1.
-	rows, err := f.GetRows("1210000")
+	rows, err := f.GetRows(sheetLists[2])
 	for _, row := range rows {
 		for _, colCell := range row {
 			fmt.Print(colCell, "\t")
