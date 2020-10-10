@@ -11,6 +11,12 @@ func hello(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	fmt.Fprintf(w, "hello, %s!\n", p.ByName("name"))
 }
 
+/*
+test HTTP/2
+
+curl -X GET -I --http2 --insecure https://localhost:8080/hello/fahmi
+*/
+
 func main() {
 
 	mux := httprouter.New()
