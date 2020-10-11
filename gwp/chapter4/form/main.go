@@ -6,8 +6,8 @@ import (
 )
 
 func process(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	fmt.Fprintln(w, r.Form)
+
+	fmt.Fprintln(w, r.FormValue("hello"))
 }
 
 func main() {
