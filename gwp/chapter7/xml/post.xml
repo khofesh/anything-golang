@@ -2,4 +2,14 @@
 <post id="1">
   <content>Hello world!</content>
   <author id="2">sau sheong</author>
+  <comments>
+    <comment id="1">
+      <content>have a great day!</content>
+      <author id="3">Adam</author>
+    </comment>
+    <comment id="2">
+      <content>how are you today?</content>
+      <author id="4">Betty</author>
+    </comment>
+  </comments>
 </post>
