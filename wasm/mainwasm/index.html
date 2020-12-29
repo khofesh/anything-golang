@@ -1,19 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="wasm_exec.js"></script>
     <script>
+        if (!WebAssembly.instantiateStreaming) {
+            // polyfill
+            WebAssembly.instantiateStreaming = async (resp, importObject) => {
+                const source = await (await resp).arrayBuffer();
+                return await WebAssembly.instantiate(source, importObject);
+            };
+        }
+
         const go = new Go();
-		WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
-			go.run(result.instance);
-		});
+        let mod, inst;
+        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+            mod = result.module;
+            inst = result.instance;
+            go.run(result.instance);
+
+            document.getElementById("addButton").disabled = false;
+            document.getElementById("subtractButton").disabled = false;
+        });
+
+
     </script>
     <title>Document</title>
 </head>
+
 <body>
-    <button>hello</button>
+    <button onClick="add(3, 4);" id="addButton" disabled>Add</button>
+    <button onClick="subtract(30, 40);" id="subtractButton" disabled>Subtract</button>
 </body>
+
 </html>
