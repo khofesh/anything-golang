@@ -7,33 +7,26 @@
 
     <script src="wasm_exec.js"></script>
     <script>
-        if (!WebAssembly.instantiateStreaming) {
-            // polyfill
-            WebAssembly.instantiateStreaming = async (resp, importObject) => {
-                const source = await (await resp).arrayBuffer();
-                return await WebAssembly.instantiate(source, importObject);
-            };
-        }
-
         const go = new Go();
-        let mod, inst;
         WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
-            mod = result.module;
-            inst = result.instance;
             go.run(result.instance);
-
-            document.getElementById("addButton").disabled = false;
-            document.getElementById("subtractButton").disabled = false;
         });
-
-
     </script>
     <title>Document</title>
 </head>
 
 <body>
-    <button onClick="add(3, 4);" id="addButton" disabled>Add</button>
-    <button onClick="subtract(30, 40);" id="subtractButton" disabled>Subtract</button>
+    <div>
+        <input type="text" id="value1">
+        <input type="text" id="value2">
+        <p>=</p>
+        <input type="text" id="result">
+
+    </div>
+    <div style="margin-top: 0.2rem;">
+        <button onClick="add('value1', 'value2', 'result');" id="addButton">Add</button>
+        <button onClick="subtract('value1', 'value2', 'result');" id="subtractButton">Subtract</button>
+    </div>
 </body>
 
 </html>
